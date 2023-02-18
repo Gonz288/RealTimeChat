@@ -4,9 +4,9 @@ const mongoose = require("mongoose");
 const handlebars = require("express-handlebars");
 const Handlebars = require("handlebars");
 const {Server} = require("socket.io");
-const messagesRouter = require("./src/routes/messagesRouter");
-const messagesModel = require("./src/models/messages");
-const chatRouter = require("./src/routes/chatRouter");
+const messagesRouter = require("./routes/messagesRouter");
+const messagesModel = require("./models/messages");
+const chatRouter = require("./routes/chatRouter");
 
 dotenv.config();
 const app = express();
@@ -14,19 +14,19 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-const PORT = process.env.SERVER_PORT || 8081;
+const port = process.env.PORT || 8081;
 const DB_USER = process.env.DB_USER;
 const DB_PASS = process.env.DB_PASS;
 const DB_NAME = process.env.DB_NAME;
 
-const httpServer = app.listen(PORT, ()=>{
-    console.log(`Server running on port ${PORT}`)
+const httpServer = app.listen(port, ()=>{
+    console.log(`Server running on port ${port}`)
 });
 
 app.engine("handlebars", handlebars.engine());
-app.set("views", __dirname + "/src/views");
+app.set("views", __dirname + "/views");
 app.set("view engine", "handlebars");
-app.use(express.static(__dirname + "/src/public"));
+app.use(express.static(__dirname + "/public"));
 
 app.post("/socketMessage", (req, res) => {
     const { message } = req.body;
@@ -34,7 +34,7 @@ app.post("/socketMessage", (req, res) => {
     res.send("ok");
 });
 app.use("/messages", messagesRouter);
-app.use("/chat", chatRouter);
+app.use("/", chatRouter);
 
 //MongoDB
 const environment = async () => {
