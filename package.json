@@ -1,7 +1,12 @@
 {
+<<<<<<< HEAD
   "scripts": {
     "start": "node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
+=======
+  "scripts":{
+    "start": "node index.js"
+>>>>>>> 1a9f2c7d5cd4cc48379183dc60625ff233c33918
   },
   "dependencies": {
     "dotenv": "^16.0.3",
